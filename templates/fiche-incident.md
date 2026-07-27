@@ -1,0 +1,23 @@
+# Fiche d’ouverture d’incident forensic
+
+- **Case ID :**
+- **Date/heure UTC :**
+- **Déclencheur :**
+- **Demandeur :**
+- **Incident Commander :**
+- **Opérateur :**
+- **Fournisseur :**
+- **Tenant/compte/projet :**
+- **Région/zone :**
+- **Ressource(s) :**
+- **Criticité :**
+- **Données personnelles :** Oui / Non / Inconnu
+- **Données client :** Oui / Non
+- **Autorisation juridique :**
+- **Autorisation RH :**
+- **Risque de destruction immédiate :**
+- **Canal d’acquisition disponible :**
+- **Confinement autorisé :**
+- **Arrêt autorisé :**
+- **Durée de rétention :**
+- **Restrictions de transfert :**

@@ -1,0 +1,79 @@
+---
+- name: Acquisition forensic multi-cloud
+  hosts: localhost
+  gather_facts: true
+  any_errors_fatal: true
+
+  pre_tasks:
+    - name: Vérifier les autorisations et variables
+      ansible.builtin.assert:
+        that:
+          - case_id | length > 5
+          - provider in ['aws', 'azure', 'gcp', 'openstack', 'vmware', 'hyperv']
+          - incident_commander | length > 2
+          - legal_authorization | length > 2
+          - target.resource_id | length > 2
+        fail_msg: "Autorisation ou identification de cible manquante."
+
+    - name: Créer le dossier local
+      ansible.builtin.file:
+        path: "{{ evidence_root }}/{{ case_id }}"
+        state: directory
+        mode: "0700"
+
+    - name: Écrire le contexte initial
+      ansible.builtin.copy:
+        dest: "{{ evidence_root }}/{{ case_id }}/context.json"
+        mode: "0600"
+        content: |
+          {
+            "case_id": "{{ case_id }}",
+            "provider": "{{ provider }}",
+            "target": "{{ target.resource_id }}",
+            "operator": "{{ lookup('env', 'USER') }}",
+            "controller_utc": "{{ ansible_date_time.iso8601 }}",
+            "incident_commander": "{{ incident_commander }}",
+            "legal_authorization": "{{ legal_authorization }}"
+          }
+
+  tasks:
+    - name: Avertissement acquisition mémoire
+      ansible.builtin.debug:
+        msg: >-
+          La RAM doit être acquise avant arrêt/redémarrage. Utiliser uniquement
+          un outil signé et homologué. Cette étape reste soumise à validation humaine.
+      tags: [volatile, memory]
+
+    - name: Point d'intégration AWS
+      ansible.builtin.debug:
+        msg: "Appeler le rôle AWS : métadonnées, SSM, EBS, CloudTrail, isolation."
+      when: provider == 'aws'
+      tags: [aws]
+
+    - name: Point d'intégration Azure
+      ansible.builtin.debug:
+        msg: "Appeler le rôle Azure : VM facts, Run Command, snapshots, Activity Logs."
+      when: provider == 'azure'
+      tags: [azure]
+
+    - name: Point d'intégration GCP
+      ansible.builtin.debug:
+        msg: "Appeler le rôle GCP : instance describe, IAP, snapshots, Audit Logs."
+      when: provider == 'gcp'
+      tags: [gcp]
+
+    - name: Point d'intégration cloud privé
+      ansible.builtin.debug:
+        msg: "Appeler le rôle OpenStack, VMware ou Hyper-V selon le provider."
+      when: provider in ['openstack', 'vmware', 'hyperv']
+      tags: [private_cloud]
+
+    - name: Calculer les manifestes de hachage
+      ansible.builtin.shell: |
+        set -euo pipefail
+        cd "{{ evidence_root }}/{{ case_id }}"
+        find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+      args:
+        executable: /bin/bash
+      changed_when: true
+      tags: [seal]

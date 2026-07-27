@@ -1,0 +1,15 @@
+---
+case_id: "CASE-2026-001"
+provider: "aws"  # aws | azure | gcp | openstack | vmware | hyperv
+incident_commander: "A_COMPLETER"
+legal_authorization: "A_COMPLETER"
+evidence_root: "/var/lib/forensics"
+
+allow_memory_acquisition: false
+allow_network_isolation: false
+allow_shutdown: false
+
+target:
+  account_or_project: "A_COMPLETER"
+  region: "A_COMPLETER"
+  resource_id: "A_COMPLETER"

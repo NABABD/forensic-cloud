@@ -1,0 +1,8 @@
+---
+collections:
+  - amazon.aws
+  - azure.azcollection
+  - google.cloud
+  - openstack.cloud
+  - community.vmware
+  - ansible.windows
