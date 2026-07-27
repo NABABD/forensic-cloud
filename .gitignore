@@ -1,0 +1,10 @@
+*.dump
+*.mem
+*.raw
+*.E01
+*.vmdk
+*.vhd
+*.vhdx
+evidence/
+secrets/
+.env
