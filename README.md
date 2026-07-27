@@ -1,13 +1,14 @@
 # Playbook d’acquisition forensic — AWS, Azure, GCP et cloud privé
 
-**Version :** 1.0  
-**Statut :** Projet pédagogique / à adapter avant production  
-**Propriétaire :** Équipe CSIRT / DFIR  
-**Classification :** Interne sensible  
+**Version :** 1.0
+**Statut :** Projet pédagogique / à adapter avant production
+**Propriétaire :** Équipe CSIRT / DFIR
+**Classification :** Interne sensible
 
 ## 1. Objectif
 
-Ce playbook standardise la première réponse et l’acquisition de preuves numériques dans quatre environnements :
+Ce playbook standardise la première réponse et l’acquisition de preuves
+numériques dans quatre environnements :
 
 - AWS ;
 - Microsoft Azure ;
@@ -23,7 +24,8 @@ Il vise à garantir une collecte :
 - conforme aux exigences juridiques et contractuelles ;
 - respectueuse de l’ordre de volatilité.
 
-Ce document ne remplace ni une autorisation légale, ni les procédures internes, ni les contrats conclus avec les fournisseurs cloud.
+Ce document ne remplace ni une autorisation légale, ni les procédures internes,
+ni les contrats conclus avec les fournisseurs cloud.
 
 ## 2. Périmètre
 
@@ -91,7 +93,8 @@ Le playbook peut être déclenché après :
 
 ## 6. Ordre de volatilité
 
-L’ordre suivant doit être adapté au contexte, mais toute modification doit être justifiée.
+L’ordre suivant doit être adapté au contexte, mais toute modification doit être
+justifiée.
 
 | Priorité | Élément | Exemples |
 |---:|---|---|
@@ -106,7 +109,8 @@ L’ordre suivant doit être adapté au contexte, mais toute modification doit �
 | 9 | Plan de contrôle | audit logs, IAM, API calls, activité administrative |
 | 10 | Sauvegardes et archives | snapshots, sauvegardes, objets versionnés |
 
-> Un snapshot de disque ne capture pas la RAM. La mémoire doit être acquise avant un arrêt ou un redémarrage.
+> Un snapshot de disque ne capture pas la RAM. La mémoire doit être acquise
+> avant un arrêt ou un redémarrage.
 
 ## 7. Préparation avant incident
 
@@ -175,7 +179,8 @@ CASE-YYYY-NNN/
 - confirmer les obligations de notification ;
 - ouvrir un canal de communication restreint.
 
-**Point d’arrêt :** aucune collecte sans autorisation documentée, sauf procédure d’urgence préautorisée.
+**Point d’arrêt :** aucune collecte sans autorisation documentée, sauf procédure
+d’urgence préautorisée.
 
 ### Phase B — Stabilisation documentaire
 
@@ -298,7 +303,8 @@ Exporter les données brutes avant normalisation.
 
 ### Phase H — Confinement
 
-Le confinement intervient après les acquisitions volatiles, sauf danger immédiat.
+Le confinement intervient après les acquisitions volatiles, sauf danger
+immédiat.
 
 Options :
 
@@ -390,7 +396,8 @@ Questions obligatoires :
 - Existe-t-il une obligation de secret ou de confidentialité renforcée ?
 - Les données peuvent-elles sortir du compte ou du pays ?
 - Quelle est la durée de rétention autorisée ?
-- Une notification au client, au DPO, à une autorité ou à l’assureur est-elle requise ?
+- Une notification au client, au DPO, à une autorité ou à l’assureur est-elle
+  requise ?
 - Le contrat permet-il une acquisition par snapshot ?
 - Le fournisseur doit-il préserver des journaux supplémentaires ?
 - Une demande de legal hold doit-elle être envoyée ?
@@ -414,7 +421,8 @@ Une acquisition est considérée complète lorsque :
 
 ## 13. Automatisation Ansible
 
-Le dossier `ansible/` fournit une structure d’orchestration. L’automatisation ne doit jamais remplacer la décision humaine pour :
+Le dossier `ansible/` fournit une structure d’orchestration. L’automatisation ne
+doit jamais remplacer la décision humaine pour :
 
 - acquisition mémoire ;
 - arrêt d’une VM ;
@@ -434,10 +442,13 @@ ansible-playbook ansible/playbooks/forensic.yml \
 ## 14. Limites et précautions
 
 - L’acquisition live modifie nécessairement une partie du système.
-- Un snapshot est une copie logique à un instant donné, pas automatiquement une image forensique bit à bit.
-- Les disques chiffrés nécessitent de préserver les accès aux clés sans exporter de secrets inutilement.
+- Un snapshot est une copie logique à un instant donné, pas automatiquement une
+  image forensique bit à bit.
+- Les disques chiffrés nécessitent de préserver les accès aux clés sans exporter
+  de secrets inutilement.
 - Les journaux peuvent être absents si leur collecte n’était pas configurée.
-- Un attaquant disposant de privilèges cloud peut altérer les preuves avant le déclenchement.
+- Un attaquant disposant de privilèges cloud peut altérer les preuves avant le
+  déclenchement.
 - Une preuve copiée entre régions ou pays peut soulever un enjeu juridique.
 - Les services managés exigent des procédures spécifiques.
 
@@ -449,4 +460,5 @@ Convention :
 - `MINOR` : ajout de fournisseur ou d’artefact ;
 - `PATCH` : correction documentaire.
 
-Toute modification doit être revue par le responsable DFIR et le juridique lorsque le périmètre légal change.
+Toute modification doit être revue par le responsable DFIR et le juridique
+lorsque le périmètre légal change.
