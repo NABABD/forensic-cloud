@@ -46,13 +46,16 @@
 
 ## Journal des transferts
 
-| Date/heure UTC | Cédant | Destinataire | Action | Lieu/source | Lieu/destination | Hachage vérifié | Signature |
+| Date/heure UTC | Cédant | Destinataire | Action |
+Lieu/source | Lieu/destination | 
+Hachage vérifié | Signature |
 |---|---|---|---|---|---|---|---|
 | | | | | | | | |
 
 ## Déviations et observations
 
-Décrire toute erreur, coupure, modification, impossibilité d’acquisition ou changement d’ordre de volatilité.
+Décrire toute erreur, coupure, modification,
+impossibilité d’acquisition ou changement d’ordre de volatilité.
 
 ## Validation
 
